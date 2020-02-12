@@ -7,10 +7,10 @@
 # we provide a phony target clean to rm all the .o files
 #
 
-EXE = swlife
+EXE = life
 OBJS = doRow.o
 LIBS = -lplot -lcse30liferv -lcse30life
-CFLAGS := -O3 -g --std=gnu99 -L/home/linux/ieng6/cs30fa19/public/local/arm/lib
+CFLAGS := -O0 -g --std=gnu99 -L/home/linux/ieng6/cs30wi20/public/local/arm/lib
 
 .PHONY: clean
 
