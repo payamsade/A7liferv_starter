@@ -10,7 +10,7 @@
 EXE = life
 OBJS = doRow.o
 LIBS = -lplot -lcse30liferv -lcse30life
-CFLAGS := -O0 -g --std=gnu99 -L/home/linux/ieng6/cs30sp20/public/local/arm/lib
+CFLAGS := -O0 -g --std=gnu99 -L/home/linux/ieng6/cs30wi21/public/local/arm/lib
 
 .PHONY: clean
 
