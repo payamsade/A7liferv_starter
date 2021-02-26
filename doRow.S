@@ -84,6 +84,7 @@ loop:		CMP		r1, r2 // while(srcStart != srcEnd)
 		LDRB 		r6, [r1] // *srcStart
 		CMP 		r6, #1 // if (*srcStart == 1)
 		BEQ 		alive //.
+		CMP		r6, #1 // if (*srcStart != 1)
 		BNE 		dead //?? Not sure if I can do this.. else
 		B		loop  //?? do we need to push before, pop after?
 		
@@ -91,20 +92,20 @@ alive: 		CMP 	r4, #2 		//if (reqNum == 2)
 		BEQ		newAlive
 		CMP 		r4, #3 // if (reqNum == 3)
 		BEQ		newAlive
-		BNE		newDead //?? Not sure if I can do this.. else 
+		B		newDead //?? Not sure if I can do this.. else 
 
 dead:		CMP 	r4, #3 		// if (reqNum == 3)
 		BEQ		newAlive
-		BNE		newDead //?? Not sure if I can do this.. else
+		B		newDead //?? Not sure if I can do this.. else
 
 newAlive: 	MOV		r7, #1 // x = 1;
-		STR		r7, [r0] // *dest = x
+		STRB		r7, [r0] // *dest = x
 		ADD 		r0, r0, #1 //dest++
 		ADD		r1, r1, #1 //srcStart++
 		B 		loop // iterate loop
 
 newDead: 	MOV		r7, #0 // x = 0;
-		STR		r7, [r0] // *dest = x
+		STRB		r7, [r0] // *dest = x
 		ADD 		r0, r0, #1 //dest++
 		ADD		r1, r1, #1 //srcStart++
 		B 		loop // iterate loop
