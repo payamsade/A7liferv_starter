@@ -97,13 +97,13 @@ dead:		CMP 	r4, #3 		// if (reqNum == 3)
 		BEQ		newAlive
 		BNE		newDead //?? Not sure if I can do this.. else
 
-newAlive: 	MOV		r7, #0 // int x = 0;
+newAlive: 	MOV		r7, #1 // x = 1;
 		STR		r7, [r0] // *dest = x
 		ADD 		r0, r0, #1 //dest++
 		ADD		r1, r1, #1 //srcStart++
 		B 		loop // iterate loop
 
-newDead: 	MOV		r7, #0 // int x = 0;
+newDead: 	MOV		r7, #0 // x = 0;
 		STR		r7, [r0] // *dest = x
 		ADD 		r0, r0, #1 //dest++
 		ADD		r1, r1, #1 //srcStart++
