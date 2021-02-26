@@ -26,7 +26,7 @@ doRow:
 
 
 	//write your code here
-DD r2, r2, #4 // srcEnd ++;
+		ADD 		r2, r2, #4 // srcEnd ++;
 loop:		CMP		r1, r2 // while(srcStart != srcEnd)
 		BEQ		end // .
 		MOV		r4, #0 // reqNum = 0;
