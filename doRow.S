@@ -3,7 +3,7 @@
 	
 	.cpu cortex-a53
 	.equ 	NUL, 0
-	.equ 	FP_OFFSET, 16	//<FIX-ME>:fill in with appropriate value -> (# of saved regs - 1) * 4 
+	.equ 	FP_OFFSET, 12	//<FIX-ME>:fill in with appropriate value -> (# of saved regs - 1) * 4 
 				//'16' is just a place holder to make sure that the starter code 
 				//compiles. It should be updated depending on the # of saved regs you 
 				// use in your assembly program
@@ -15,8 +15,8 @@
 
 doRow:
 	/////////////////////PROLOGUE//////////////////////////////
-	push	(r4-r9, fp, lr}		// use r4-r9 protected regs
-	add	fp, sp, FP_OFFSET	// locate our frame pointer
+	push	{r4-r7, fp, lr}		// use r4-r9 protected regs
+	add	fp, sp, #FP_OFFSET	// locate our frame pointer
 	// prologue from A6
 	// You can use temporary r0-r3 and preserved r4-r9
 	// Store return value (results) in r0
@@ -91,20 +91,22 @@ alive: 		CMP 	r4, #2 		//if (reqNum == 2)
 		BEQ		newAlive
 		CMP 		r4, #3 // if (reqNum == 3)
 		BEQ		newAlive
-		BNQ		newDead //?? Not sure if I can do this.. else 
+		BNE		newDead //?? Not sure if I can do this.. else 
 
 dead:		CMP 	r4, #3 		// if (reqNum == 3)
 		BEQ		newAlive
-		BNQ		newDead //?? Not sure if I can do this.. else
+		BNE		newDead //?? Not sure if I can do this.. else
 
-newAlive: 	STR		#1, [r0] // *dest =1
+newAlive: 	MOV		r7, #0 // int x = 0;
+		STR		r7, [r0] // *dest = x
 		ADD 		r0, r0, #1 //dest++
-		ADD		r1, r1 #1 //srcStart++
+		ADD		r1, r1, #1 //srcStart++
 		B 		loop // iterate loop
 
-newDead: 	STR		#0, [r0] // *dest =0
+newDead: 	MOV		r7, #0 // int x = 0;
+		STR		r7, [r0] // *dest = x
 		ADD 		r0, r0, #1 //dest++
-		ADD		r1, r1 #1 //srcStart++
+		ADD		r1, r1, #1 //srcStart++
 		B 		loop // iterate loop
 
 end:
@@ -114,8 +116,8 @@ end:
 
 
 	/////////////////EPILOGUE/////////////////////////////////
-	sub	sp, fp, FP_OFFSET	// restore sp
-	pop	{r4-r9,fp, lr}		// restore saved registers
+	sub	sp, fp, #FP_OFFSET	// restore sp
+	pop	{r4-r7,fp, lr}		// restore saved registers
 	bx	lr			// function return
 	.size	doRow,(. - doRow)	// What is this?
 	//////////////////////////////////////////////////////////
