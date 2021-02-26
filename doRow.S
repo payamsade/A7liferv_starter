@@ -35,65 +35,65 @@ loop:		CMP		r1, r2 // while(srcStart != srcEnd)
 	//	MUL 		r3, r3, #1 //to account for each array value
 		SUB 		r5, r5, r3 //.
 		SUB 		r5, r5, #1 //srcStart =srcStart-cols-1
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart-cols-1)
 
 		MOV		r5, r1 //&srcStart
 	//	MUL 	r3, r3, #1 //to account for each array value
 		SUB 		r5, r5, r3 //srcStart =srcStart-cols
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart-cols)
 		
 		MOV		r5, r1 //&srcStart
 	//	MUL 	r3, r3, #1 //to account for each array value
 		SUB 		r5, r5, r3 //.
 		ADD 		r5, r5, #1 //srcStart =srcStart-cols+1
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart-cols+1)
 		
 		MOV		r5, r1 //&srcStart
 		SUB 		r5, r5, #1 //srcStart =srcStart-1
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart-1)
 
 		MOV		r5, r1 //&srcStart
 		ADD 		r5, r5, #1 //srcStart =srcStart+1
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart+1)
 
 		MOV		r5, r1 //&srcStart
 	//	MUL 		r3, r3, #1 //to account for each array value
 		ADD 		r5, r5, r3 //.
 		SUB 		r5, r5, #1 //srcStart =srcStart+cols-1
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart+cols-1)
 
 		MOV		r5, r1 //&srcStart
 	//	MUL 		r3, r3, #1 //to account for each array value
 		ADD 		r5, r5, r3 //srcStart =srcStart+cols
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart+cols)
 
 		MOV		r5, r1 //&srcStart
 	//	MUL 		r3, r3, #1 //to account for each array value
 		ADD 		r5, r5, r3 //.
 		ADD 		r5, r5, #1 //srcStart =srcStart+cols+1
-		LDR 		r5, [r5] // .
+		LDRB 		r5, [r5] // .
 		ADD 		r4, r4, r5 // reqNum += *(srcStart+cols+1)
 		
-		LDR 		r6, [r1] // *srcStart
+		LDRB 		r6, [r1] // *srcStart
 		CMP 		r6, #1 // if (*srcStart == 1)
 		BEQ 		alive //.
 		BNE 		dead //?? Not sure if I can do this.. else
 		B		loop  //?? do we need to push before, pop after?
 		
-alive: 	CMP 	r4, #2 		//if (reqNum == 2)
+alive: 		CMP 	r4, #2 		//if (reqNum == 2)
 		BEQ		newAlive
 		CMP 		r4, #3 // if (reqNum == 3)
 		BEQ		newAlive
 		BNQ		newDead //?? Not sure if I can do this.. else 
 
-dead:	CMP 	r4, #3 		// if (reqNum == 3)
+dead:		CMP 	r4, #3 		// if (reqNum == 3)
 		BEQ		newAlive
 		BNQ		newDead //?? Not sure if I can do this.. else
 
